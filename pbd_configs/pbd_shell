@@ -81,6 +81,7 @@ flask_template() {
 }
 
 
+
 handle_arguments() {
     while getopts ":t:" opt; do
         case ${opt} in
