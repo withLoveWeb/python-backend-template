@@ -73,7 +73,7 @@ template_drf() {
 template_gql() {
 
     # delete pbd files
-    rm -rf django-template-gql
+    rm -rf django-template-drf
     rm -rf flask-template
     rm -rf README.md
     rm -rf LICENSE
