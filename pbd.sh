@@ -81,6 +81,7 @@ template_gql() {
     rm -rf docs
     rm -rf .github
 
+    mkdir server
     mv django-template-gql server 
     mkdir client
     mkdir docs
@@ -90,13 +91,18 @@ template_gql() {
     cat pbd_configs/django_gql_readme.md > README.md
     sed -i "s/projectname/$pr_name/g" README.md
 
-    # cp pbd_configs/containers/dev-Dockerfile kernel/.devcontainer/Dockerfile
-    # cp pbd_configs/containers/dev-docker-compose.yml kernel/.devcontainer/docker-compose.yml
+    read -p "Add Django to container?" ans
+    if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+      cp pbd_configs/containers/Dockerfile-django server/Dockerfile
+      cp pbd_configs/containers/docker-compose-db-django.yml server/docker-compose.yml
+    else
+      cp pbd_configs/containers/docker-compose-db.yml server/docker-compose.yml
+    fi
 
-    cp pbd_configs/containers/Dockerfile server/Dockerfile
-    cp pbd_configs/containers/docker-compose.yml docker-compose.yml
-    cp pbd_configs/django-entrypoint.sh server/entrypoint.sh
+    cp pbd_configs/containers/Dockerfile.prod Dockerfile.prod
+    cp pbd_configs/containers/docker-compose.prod.yml docker-compose.prod.yml
 
+    cp pbd_configs/containers/entrypoint.sh server/entrypoint.sh
     cp pbd_configs/deploy.sh deploy.sh
 
     rm -rf pbd_configs
@@ -107,7 +113,6 @@ as_template() {
     echo "Select template:"
     echo "[1] Django + DRF"
     echo "[2] Django + Graphene"
-    # echo "[3] Flask"
     read -p "> " template_choice
 
     case "$template_choice" in
@@ -121,10 +126,6 @@ as_template() {
             template_gql
             rm -rf pbd.sh
             ;;
-        # 3)
-        #     echo "Flask template in develop.."
-        #     exit 0
-        #     ;;
         *)
             echo "Aborted..."
             exit 1
@@ -133,9 +134,6 @@ as_template() {
 }
 
 case "$1" in
-    # install)
-    #     install_pbd
-    #     ;;
     --as-template)
         as_template
         ;;
