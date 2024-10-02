@@ -17,26 +17,6 @@ $ pdb [COMMAND] [OPTION]"
     echo " -h, --help      Show this help message and exit"
 }
 
-# install_pbd() {
-#     echo "Installing..."
-#
-#     # create directory
-#     mkdir /home/$USER/.pbd/
-#
-#     # copy templates
-#     cp -r django-template-drf /home/$USER/.pbd/django-template-drf
-#     cp -r django-template-gql /home/$USER/.pbd/django-template-gql
-#     cp -r flask-template /home/$USER/.pbd/flask-template
-#
-#     cat pbd_configs/pbd_shell > /home/$USER/.local/bin/pbd
-#     chmod +x /home/$USER/.local/bin/pbd
-#
-#     echo '"pbd" add in your shell'
-#     echo 'try "pbd --help"'
-#
-# }
-#
-
 template_drf() {
 
     # delete pbd files
@@ -53,12 +33,6 @@ template_drf() {
 
     cat pbd_configs/django_drf_readme.md > README.md
     sed -i "s/projectname/$pr_name/g" README.md
-
-    # mkdir kernel/.devcontainer
-    #
-    # cp pbd_configs/containers/dev-container.json kernel/.devcontainer/dev-container.json
-    # cp pbd_configs/containers/dev-Dockerfile kernel/.devcontainer/Dockerfile
-    # cp pbd_configs/containers/dev-docker-compose.yml kernel/.devcontainer/docker-compose.yml
 
     cp pbd_configs/containers/Dockerfile server/Dockerfile
     cp pbd_configs/containers/docker-compose.yml docker-compose.yml
@@ -91,7 +65,7 @@ template_gql() {
     cat pbd_configs/django_gql_readme.md > README.md
     sed -i "s/projectname/$pr_name/g" README.md
 
-    read -p "Add Django to container?" ans
+    read -p "Add Django to container? [y/n] " ans
     if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
       cp pbd_configs/containers/Dockerfile-django server/Dockerfile
       cp pbd_configs/containers/docker-compose-db-django.yml server/docker-compose.yml

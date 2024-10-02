@@ -12,10 +12,10 @@ services:
 
   web:
     volumes:
-      - ./kernel:/app
+      - ./:/app
     env_file:
-      - ./server/.env
-    build: ./server
+      - .env
+    build: .
     ports:
       - '8000:8000'
     depends_on:
