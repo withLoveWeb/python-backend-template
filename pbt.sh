@@ -75,8 +75,12 @@ template_gql() {
     cp pbt_configs/containers/Dockerfile.prod Dockerfile.prod
     cp pbt_configs/containers/docker-compose.prod.yml docker-compose.prod.yml
 
+    cp pbt_configs/containers/Dockerfile.prod Dockerfile.prod
+    cp pbt_configs/containers/docker-compose.prod.yml docker-compose.prod.yml
+
     cp pbt_configs/containers/entrypoint.sh server/entrypoint.sh
     cp pbt_configs/deploy.sh deploy.sh
+    chmod 755 deploy.sh
 
     rm -rf pbt_configs
 
