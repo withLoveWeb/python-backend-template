@@ -1,14 +1,15 @@
 #!/bin/bash
 
-# https://github.com/lyaguxafrog/python-backend-devcontainer
+# fork from https://github.com/lyaguxafrog/python-backend-devcontainer
+#
 
 help() {
-    echo "Welcome to Python Backend Devcontainers!
+    echo "Welcome to Python Backend Templates!
 Usage:
 $ pdb [COMMAND] [OPTION]"
 
     echo "Commands:"
-    echo " install         Install Python Backend Devcontainers"
+    # echo " install         Install Python Backend Devcontainers"
     echo " --as-template   Use the repository as a template"
     echo " --help          Show this help message and exit"
 
@@ -16,25 +17,25 @@ $ pdb [COMMAND] [OPTION]"
     echo " -h, --help      Show this help message and exit"
 }
 
-install_pbd() {
-    echo "Installing..."
-
-    # create directory
-    mkdir /home/$USER/.pbd/
-
-    # copy templates
-    cp -r django-template-drf /home/$USER/.pbd/django-template-drf
-    cp -r django-template-gql /home/$USER/.pbd/django-template-gql
-    cp -r flask-template /home/$USER/.pbd/flask-template
-
-    cat pbd_configs/pbd_shell > /home/$USER/.local/bin/pbd
-    chmod +x /home/$USER/.local/bin/pbd
-    
-    echo '"pbd" add in your shell'
-    echo 'try "pbd --help"'
-
-}
-
+# install_pbd() {
+#     echo "Installing..."
+#
+#     # create directory
+#     mkdir /home/$USER/.pbd/
+#
+#     # copy templates
+#     cp -r django-template-drf /home/$USER/.pbd/django-template-drf
+#     cp -r django-template-gql /home/$USER/.pbd/django-template-gql
+#     cp -r flask-template /home/$USER/.pbd/flask-template
+#
+#     cat pbd_configs/pbd_shell > /home/$USER/.local/bin/pbd
+#     chmod +x /home/$USER/.local/bin/pbd
+#
+#     echo '"pbd" add in your shell'
+#     echo 'try "pbd --help"'
+#
+# }
+#
 
 template_drf() {
 
@@ -46,22 +47,22 @@ template_drf() {
     rm -rf docs
     rm -rf .github
 
-    mv django-template-drf kernel
+    mv django-template-drf server
 
     read -p "Project name: " pr_name
 
     cat pbd_configs/django_drf_readme.md > README.md
     sed -i "s/projectname/$pr_name/g" README.md
 
-    mkdir kernel/.devcontainer
+    # mkdir kernel/.devcontainer
+    #
+    # cp pbd_configs/containers/dev-container.json kernel/.devcontainer/dev-container.json
+    # cp pbd_configs/containers/dev-Dockerfile kernel/.devcontainer/Dockerfile
+    # cp pbd_configs/containers/dev-docker-compose.yml kernel/.devcontainer/docker-compose.yml
 
-    cp pbd_configs/containers/dev-container.json kernel/.devcontainer/dev-container.json
-    cp pbd_configs/containers/dev-Dockerfile kernel/.devcontainer/Dockerfile
-    cp pbd_configs/containers/dev-docker-compose.yml kernel/.devcontainer/docker-compose.yml
-
-    cp pbd_configs/containers/Dockerfile kernel/Dockerfile
+    cp pbd_configs/containers/Dockerfile server/Dockerfile
     cp pbd_configs/containers/docker-compose.yml docker-compose.yml
-    cp pbd_configs/django-entrypoint.sh kernel/entrypoint.sh
+    cp pbd_configs/django-entrypoint.sh server/entrypoint.sh
 
     cp pbd_configs/deploy.sh deploy.sh
 
@@ -80,28 +81,25 @@ template_gql() {
     rm -rf docs
     rm -rf .github
 
-    mv django-template-gql kernel
+    mv django-template-gql server 
+    mkdir client
+    mkdir docs
 
     read -p "Project name: " pr_name
 
     cat pbd_configs/django_gql_readme.md > README.md
     sed -i "s/projectname/$pr_name/g" README.md
 
-    mkdir kernel/.devcontainer
+    # cp pbd_configs/containers/dev-Dockerfile kernel/.devcontainer/Dockerfile
+    # cp pbd_configs/containers/dev-docker-compose.yml kernel/.devcontainer/docker-compose.yml
 
-    cp pbd_configs/containers/dev-container.json kernel/.devcontainer/dev-container.json
-    cp pbd_configs/containers/dev-Dockerfile kernel/.devcontainer/Dockerfile
-    cp pbd_configs/containers/dev-docker-compose.yml kernel/.devcontainer/docker-compose.yml
-
-    cp pbd_configs/containers/Dockerfile kernel/Dockerfile
+    cp pbd_configs/containers/Dockerfile server/Dockerfile
     cp pbd_configs/containers/docker-compose.yml docker-compose.yml
-    cp pbd_configs/django-entrypoint.sh kernel/entrypoint.sh
+    cp pbd_configs/django-entrypoint.sh server/entrypoint.sh
 
     cp pbd_configs/deploy.sh deploy.sh
 
     rm -rf pbd_configs
-
-    xdg-open https://github.com/lyaguxafrog/python-backend-devcontainers/blob/release/docs/DJANGO_GQL.md
 
 }
 
@@ -109,7 +107,7 @@ as_template() {
     echo "Select template:"
     echo "[1] Django + DRF"
     echo "[2] Django + Graphene"
-    echo "[3] Flask"
+    # echo "[3] Flask"
     read -p "> " template_choice
 
     case "$template_choice" in
@@ -123,10 +121,10 @@ as_template() {
             template_gql
             rm -rf pbd.sh
             ;;
-        3)
-            echo "Flask template in develop.."
-            exit 0
-            ;;
+        # 3)
+        #     echo "Flask template in develop.."
+        #     exit 0
+        #     ;;
         *)
             echo "Aborted..."
             exit 1
@@ -135,9 +133,9 @@ as_template() {
 }
 
 case "$1" in
-    install)
-        install_pbd
-        ;;
+    # install)
+    #     install_pbd
+    #     ;;
     --as-template)
         as_template
         ;;
