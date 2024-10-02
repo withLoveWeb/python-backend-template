@@ -26,7 +26,7 @@ template_drf() {
     rm -rf docs
     rm -rf .github
 
-    mv django-template-drf server
+    mv django-template-drf/* server
 
     read -p "Project name: " pr_name
 
@@ -54,7 +54,6 @@ template_gql() {
     rm -rf docs
     rm -rf .github
 
-    mkdir server
     mv django-template-gql server 
     mkdir client
     mkdir docs
