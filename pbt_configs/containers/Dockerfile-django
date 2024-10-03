@@ -10,5 +10,6 @@ COPY . /app
 WORKDIR /app
 
 COPY ./entrypoint.sh /
+RUN sleep 2
 ENTRYPOINT ["bash", "/entrypoint.sh"]
 

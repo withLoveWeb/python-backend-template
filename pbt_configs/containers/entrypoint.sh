@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./manage.sh makemigratios --no-input
+./manage.sh makemigrations --no-input
 ./manage.sh migrate --no-input
 # ./manage.sh collectstatic --no-input
 
