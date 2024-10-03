@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # fork from https://github.com/lyaguxafrog/python-backend-devcontainer
-#
+# 
 
 help() {
     echo "Welcome to Python Backend Templates!
@@ -40,8 +40,6 @@ template_drf() {
     cp pbt_configs/deploy.sh deploy.sh
 
     rm -rf pbt_configs
-
-    xdg-open https://github.com/lyaguxafrog/python-backend-devcontainers/blob/release/docs/DJANGO_DRF.md
 }
 
 template_gql() {
@@ -62,6 +60,8 @@ template_gql() {
 
     cat pbt_configs/django_gql_readme.md > README.md
     sed -i "s/projectname/$pr_name/g" README.md
+    touch "docs/{$pr_name}.dbml"
+    touch "docs/{$pr_name}_TZ.md"
 
     read -p "Add Django to container? [y/n] " ans
     if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
@@ -82,7 +82,6 @@ template_gql() {
     chmod 755 deploy.sh
 
     rm -rf pbt_configs
-
 }
 
 as_template() {
@@ -110,7 +109,7 @@ as_template() {
 }
 
 case "$1" in
-    --as-template)
+    template)
         as_template
         ;;
     *)
