@@ -65,6 +65,10 @@ clear() {
     rm -rf fast-api-template
     rm -rf pbt_configs
     rm -rf pbt.sh 
+    read -p "Remove nginx? [y/n]" ans
+    if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+      rm -rf nginx
+    fi 
 }
 
 as_template() {
