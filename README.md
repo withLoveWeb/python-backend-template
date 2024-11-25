@@ -18,10 +18,6 @@
 
 # How to use?
 
-You have two ways to use PBD:
-
-## 1. GitHub repo template
-
 You can use this repository as a [GitHub template](https://docs.github.com/articles/creating-a-repository-from-a-template/)
 
 1. Above the file list, click **Use this template**.
@@ -38,28 +34,4 @@ You can use this repository as a [GitHub template](https://docs.github.com/artic
 ```bash
 ./pbd.sh --as-template
 ```
-
-----
-
-## 2. Install PBD - IN DEVELOP
-
-<!--You can also install PB and use it locally
-
-1. Clone repository
-```bash
-git clone https://github.com/lyaguxafrog/python-backend-devcontainers
-```
-2. Run install script
-```bash
-./pbd.sh install
-```
-3. Check installation
-```bash
-pbd --help # pbd - command in your shell
-```
-
----
-
-**If you have any questions, ask in the [issue](https://github.com/lyaguxafrog/python-backend-devcontainers/issues)**
--->
 
