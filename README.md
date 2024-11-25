@@ -32,6 +32,6 @@ You can use this repository as a [GitHub template](https://docs.github.com/artic
 
 5. **Clone** your repository and run:
 ```bash
-./pbd.sh --as-template
+./pbd.sh template
 ```
 
