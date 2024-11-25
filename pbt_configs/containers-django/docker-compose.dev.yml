@@ -34,6 +34,7 @@ services:
       - ./server/.env
     build: 
       context: ./server
+      dockerfile: Dockerfile.prod
     restart: unless-stopped
     depends_on:
       - database

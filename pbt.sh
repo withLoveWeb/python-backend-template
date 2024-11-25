@@ -33,10 +33,10 @@ template_gql() {
     sed -i "s/projectname/$pr_name/g" README.md
 
     # local containers
-    cp pbt_configs/containers-django/Dockerfile.local server/Dockerfile
-    cp pbt_configs/containers-django/docker-compose.local.yml server/docker-compose.yml
+    cp pbt_configs/containers-django/Dockerfile.local server/Dockerfile.local
+    cp pbt_configs/containers-django/docker-compose.local.yml docker-compose.yml
 
-    # dev containers  
+    # dev containers
     cp pbt_configs/containers-django/Dockerfile.dev server/Dockerfile.dev
     cp pbt_configs/containers-django/docker-compose.dev.yml docker-compose.dev.yml
 
@@ -44,11 +44,12 @@ template_gql() {
     cp pbt_configs/containers-django/Dockerfile.prod server/Dockerfile.prod
     cp pbt_configs/containers-django/docker-compose.prod.yml docker-compose.prod.yml
 
-    # other utils 
+    # other utils
     cp pbt_configs/containers-django/entrypoint.local.sh server/entrypoint.local.sh
     cp pbt_configs/containers-django/entrypoint.dev.sh server/entrypoint.dev.sh
     cp pbt_configs/containers-django/entrypoint.prod.sh server/entrypoint.prod.sh
     cp pbt_configs/deploy.sh deploy.sh
+    mv .dockerignore server/.dockerignore
 
     chmod 755 deploy.sh
 

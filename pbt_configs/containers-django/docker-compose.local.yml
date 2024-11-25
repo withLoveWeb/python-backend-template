@@ -4,12 +4,12 @@ services:
 
   backend:
     volumes:
-      - ./:/app
+      - ./server:/app
     env_file:
-      - .env
+      - ./server/.env
     build: 
-      context: .
-      dockerfile: Dockerfile
+      context: ./server
+      dockerfile: Dockerfile.local
     command: >
       bash -c "./manage.sh makemigrations 
       && ./manage.sh migrate"
