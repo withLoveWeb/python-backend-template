@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# fork from https://github.com/lyaguxafrog/python-backend-devcontainer
-# 
 
 help() {
     echo "Welcome to Python Backend Templates!
@@ -9,7 +7,8 @@ Usage:
 $ pdt [COMMAND] [OPTION]"
 
     echo "Commands:"
-    echo " template   Use the repository as a template"
+    echo " template        Use the repository as a template"
+    echo " clear           Delete all installation files"
     echo " --help          Show this help message and exit"
 
     echo "Options:"
@@ -17,44 +16,16 @@ $ pdt [COMMAND] [OPTION]"
 }
 
 template_drf() {
-
-    # delete pbt files
-    rm -rf django-template-gql
-    rm -rf flask-template
-    rm -rf README.md
-    rm -rf LICENSE
-    rm -rf docs
-    rm -rf .github
-
-    mv django-template-drf/* server
-
-    read -p "Project name: " pr_name
-
-    cat pbt_configs/django_drf_readme.md > README.md
-    sed -i "s/projectname/$pr_name/g" README.md
-
-    cp pbt_configs/containers/Dockerfile server/Dockerfile
-    cp pbt_configs/containers/docker-compose.yml docker-compose.yml
-    cp pbt_configs/django-entrypoint.sh server/entrypoint.sh
-
-    cp pbt_configs/deploy.sh deploy.sh
-
-    rm -rf pbt_configs
+  echo "NOt ready"
 }
 
 template_gql() {
 
     # delete pbt files
-    rm -rf django-template-drf
-    rm -rf flask-template
     rm -rf README.md
     rm -rf LICENSE
-    rm -rf docs
-    rm -rf .github
 
     mv django-template-gql server 
-    mkdir client
-    mkdir docs
 
     read -p "Project name: " pr_name
 
@@ -63,43 +34,65 @@ template_gql() {
     touch "docs/{$pr_name}.dbml"
     touch "docs/{$pr_name}_TZ.md"
 
-    read -p "Add Django to container? [y/n] " ans
-    if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
-      cp pbt_configs/containers/Dockerfile-django server/Dockerfile
-      cp pbt_configs/containers/docker-compose-db-django.yml server/docker-compose.yml
-    else
-      cp pbt_configs/containers/docker-compose-db.yml server/docker-compose.yml
-    fi
+    # local containers
+    cp pbt_configs/containers-django/Dockerfile.local server/Dockerfile.local
+    cp pbt_configs/containers-django/docker-compose.local.yml docker-compose.yml
 
-    cp pbt_configs/containers/Dockerfile.prod Dockerfile.prod
-    cp pbt_configs/containers/docker-compose.prod.yml docker-compose.prod.yml
+    # dev containers
+    cp pbt_configs/containers-django/Dockerfile.dev server/Dockerfile.dev
+    cp pbt_configs/containers-django/docker-compose.dev.yml docker-compose.dev.yml
 
-    cp pbt_configs/containers/Dockerfile.prod Dockerfile.prod
-    cp pbt_configs/containers/docker-compose.prod.yml docker-compose.prod.yml
+    # prod containers
+    cp pbt_configs/containers-django/Dockerfile.prod server/Dockerfile.prod
+    cp pbt_configs/containers-django/docker-compose.prod.yml docker-compose.prod.yml
 
-    cp pbt_configs/containers/entrypoint.sh server/entrypoint.sh
+    # other utils
+    cp pbt_configs/containers-django/entrypoint.local.sh server/entrypoint.local.sh
+    cp pbt_configs/containers-django/entrypoint.dev.sh server/entrypoint.dev.sh
+    cp pbt_configs/containers-django/entrypoint.prod.sh server/entrypoint.prod.sh
     cp pbt_configs/deploy.sh deploy.sh
+    mv .dockerignore server/.dockerignore
+
     chmod 755 deploy.sh
 
+}
+
+template_fastapi() {
+  echo "NOt ready"
+}
+
+clear() {
+
+    rm -rf django-template-gql
+    rm -rf django-template-drf
+    rm -rf fast-api-template
     rm -rf pbt_configs
+    rm -rf pbt.sh 
+    read -p "Remove nginx? [y/n]" ans
+    if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+      rm -rf nginx
+    fi 
 }
 
 as_template() {
     echo "Select template:"
     echo "[1] Django + DRF"
     echo "[2] Django + Graphene"
+    echo "[2] Fast Api"
     read -p "> " template_choice
 
     case "$template_choice" in
         1)
             echo "Django + DRF"
             template_drf
-            rm -rf pbt.sh
             ;;
         2)
             echo "Django + Graphene"
             template_gql
-            rm -rf pbt.sh
+            ;;
+        3)
+            echo "Fast Api"
+            template_fastapi
             ;;
         *)
             echo "Aborted..."
@@ -111,6 +104,9 @@ as_template() {
 case "$1" in
     template)
         as_template
+        ;;
+    clear)
+        clear
         ;;
     *)
         help
